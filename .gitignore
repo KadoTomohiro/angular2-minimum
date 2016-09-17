@@ -1,0 +1,8 @@
+# パッケージ
+node_modules
+
+# 生成物
+bin
+
+# 開発環境
+.idea

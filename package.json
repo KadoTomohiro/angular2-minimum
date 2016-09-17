@@ -1,0 +1,20 @@
+{
+  "name": "angular2-minimum",
+  "version": "1.0.0",
+  "description": "要件を満たすAngular2の最小構成を探る。他のプロジェクトのテンプレートとなることを目指す。",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "reository": {
+    "type": "git",
+    "url": "git+https://github.com/KadoTomohiro/angular2-minimum"
+  },
+  "keywords": [
+    "angular2",
+    "AoT",
+    "webpack"
+  ],
+  "author": "KadoTomohiro",
+  "license": "MIT"
+}
