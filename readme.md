@@ -52,3 +52,14 @@ package.jsonの作成
 $ npm init -y
 ```
 
+### パッケージのインストール
+
+angularのインストール。
+```bash
+$ npm install -S angular/{common,compiler,core,forms,http,platform-browser,platform-browser-dynamic,router} rxjs@5.0.0-beta.12 zone.js@0.6.21 core-js
+```
+`@angular/{...}`はAngularを構成するモジュール群。`form`,`http`,`router`は今回は必要ないが、普通のWebAppではよく使うので入れておく。
+
+zone.jsとrxjsはangular2のPEER DEPENDENCY
+
+core-jsはES2015のpolyfill
