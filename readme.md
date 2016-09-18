@@ -21,7 +21,7 @@
   * zone.jsのバグ？のため、動かない可能性が高い。優先度を下げる
   
 
-## 構築手順
+## 環境構築手順
 
 ### 本ドキュメント作成時の環境
 
@@ -31,11 +31,12 @@
 
 ### プロジェクトの作成
 
-プロジェクトルートディレクトリを作成し、移動する。
+#### プロジェクトルートの作成
 ```bash
 $ mkdir angular2-minimum && cd $_
 ```
 
+#### git
 git管理を開始し、非管理設定を追加。なお、コミット等のタイミングは特に指定しないので、適宜コミットしてください。
 ```bash
 $ git init
@@ -47,7 +48,8 @@ node_modules
 bin
 ```
 
-`package.json`の作成
+#### package.json
+`package.json`
 ```bash
 $ npm init -y
 ```
@@ -55,6 +57,8 @@ $ npm init -y
 ### モジュールのインストール/セットアップ
 
 #### Angular2
+
+##### インストール
 ```bash
 $ npm install -S angular/{common,compiler,core,forms,http,platform-browser,platform-browser-dynamic,router} rxjs@5.0.0-beta.12 zone.js@0.6.21 core-js
 ```
@@ -64,12 +68,14 @@ $ npm install -S angular/{common,compiler,core,forms,http,platform-browser,platf
 * core-jsはES2015のpolyfill
 
 #### Typescrip
+
+##### インストール
 ```bash
 $ npm install -D typescript@beta tslint
 $ touch tsconfig.json tslint.json
 ```
-トランスパイルの設定を記述
 
+##### 設定
 `tsconfig.json`
 ```json
   "compilerOptions": {
@@ -94,8 +100,6 @@ $ touch tsconfig.json tslint.json
 }
 ```
 
-
-tslintによるソースチェックの設定
 `tslint.json`
 ```json
 {
@@ -193,18 +197,19 @@ tslintによるソースチェックの設定
 }
 ```
 
-
+##### npmコマンド
 トランスパイルはwebpackが実行するので、`tsc`コマンドの設定は不要。
 
 #### webpack
 
+##### インストール
 ```bash
 $ npm install -D webpack@beta ta-loader
 $ touch webpack.config.js
 ```
 
 
-コンパイルの設定
+##### 設定
 `webpack.config.js`
 ```
 'use strict';
@@ -242,4 +247,61 @@ module.exports = {
 };
 ```
 
+
+##### npmコマンド
+`package.json`
+```json
+"scripts": {
+  "webpack": "webpack --config webpack.config.js"
+}
+```
+
 #### lite-server
+
+##### インストール
+```bash
+$ npm install -D lite-server
+$ touch bs-config.js
+```
+
+##### 設定
+
+`bs-config.js`
+```javascript
+const proxy = require('http-proxy-middleware');
+
+var apiProxy = proxy('/app', {
+    target: 'http://localhost:8001',
+    changeOrigin: true   // for vhosted sites
+});
+
+module.exports = {
+  "port": 8000,
+  "files": ["./**/*.{html,htm,css,js}"],
+  "server": {
+    middleware: {
+      0: require('connect-history-api-fallback')({
+        index: '/index.html'
+      }),
+      1: apiProxy
+    },
+    "baseDir": [
+      "./src/",
+      "./bin/"
+    ],
+    "routes": {
+      "/node_modules": "node_modules"
+    }
+  }
+}
+```
+
+##### npmコマンド
+`package.json`
+```json
+"scripts": {
+  "lite": "lite-server -c bs-config.js",
+  "start": "npm run webpack && npm run lite"
+}
+```
+
