@@ -215,7 +215,7 @@ $ touch tsconfig.json tslint.json
 
 ##### インストール
 ```bash
-$ npm install -D webpack@beta ta-loader
+$ npm install -D webpack@beta ts-loader tslint-loader
 $ touch webpack.config.js
 ```
 
