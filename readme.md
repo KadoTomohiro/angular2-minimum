@@ -383,3 +383,24 @@ import { AppComponent }   from '../components/app.component';
 export class AppModule {
 }
 ```
+
+### component
+```bash
+$ touch src/components/app.component.ts
+```
+
+`app.component.ts`
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+
+  template: `
+  <h1>{{title}}</h1>
+  `,
+})
+export class AppComponent {
+  title:string = 'Hello World!';
+}
+```
