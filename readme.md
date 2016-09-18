@@ -112,7 +112,7 @@ $ touch tsconfig.json tslint.json
       "check-space"
     ],
     "curly": true,
-    "eofline": true,
+    "eofline": false,
     "forin": true,
     "indent": [
       true,
