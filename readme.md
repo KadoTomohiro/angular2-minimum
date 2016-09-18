@@ -400,3 +400,116 @@ export class AppComponent {
 ```
 npm start
 ```
+
+## AoTの導入
+
+### angular compiler cli
+
+#### インストール
+```bash
+$ npm install -S @angular/{compiler-cli,platform-server}
+$ npm install -D @types/node
+```
+
+#### 設定
+```bash
+$ touch tsconfig.aot.json
+```
+
+`tsconfig.aot.json`
+```json
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "declaration": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./bin",
+    "rootDir": "./src",
+    "types": [
+      "node"
+    ]
+  },
+  "angularCompilerOptions": {
+    "debug": true
+  },
+  "compileOnSave": false,
+  "files": [
+    "src/main.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "bin"
+  ]
+}
+```
+
+`webpack.config.js`(entpryを修正)
+```javascript
+  entry: {
+    'bootstrap': './src/main.ts',
+    'bootstrap.aot': './src/main.aot.ts'
+  },
+```
+
+#### npmコマンド
+`package.json`
+```json
+"scripts": {
+  "ngc": "ngc -p ./tsconfig.aot.json",
+  "start:ngc": "npm run ngc && npm start"
+}
+```
+
+#### エンドポイントの修正
+`src/index.html`
+```html
+  <!-- 3. Configure SystemJS -->
+  <!--<script src="bootstrap.bundle.js"></script>-->
+  <script src="bootstrap.aot.bundle.js"></script>
+```
+
+```bash
+$ touch src/main.aot.ts
+```
+
+`src/main.aot.ts`
+```typescript
+import { platformBrowser } from '@angular/platform-browser';
+import { AppModuleNgFactory } from './modules/app.module.ngfactory';
+const platform = platformBrowser();
+platform.bootstrapModuleFactory(AppModuleNgFactory);
+```
+
+#### ngfactory生成
+
+`modules/app.module.ngfactory`は存在しないのでエラーが出る。`ngc`コマンドで`ngfactory`を生成する。
+```bash
+$ npm run ngc
+```
+
+`*.ngfactory.ts`はgitから除外しておく。
+
+`.gitignore`
+```
+*.ngfactory.ts
+```
+
+#### 実行
+
+```bash
+$ npm run start:ngc
+```
+
+aotありの場合、生成されたbundleファイルサイズが半分くらいになっているはず。
