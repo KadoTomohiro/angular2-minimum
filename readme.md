@@ -229,6 +229,13 @@ module.exports = {
   },
 
   module: {
+    preLoaders: [{
+      test: /\.ts$/,
+      loader: 'tslint',
+      query: {
+        configFileName: 'tsconfig.json'
+      }
+    }],
     loaders: [
       {
         test: /\.ts$/,
