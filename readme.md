@@ -96,8 +96,6 @@ $ touch tsconfig.json tslint.json
 
 
 tslintによるソースチェックの設定
-
-
 `tslint.json`
 ```json
 {
@@ -201,6 +199,47 @@ tslintによるソースチェックの設定
 #### webpack
 
 ```bash
+$ npm install -D webpack@beta ta-loader
+$ touch webpack.config.js
+```
+
+
+コンパイルの設定
+`webpack.config.js`
+```
+'use strict';
+let path = require('path');
+
+module.exports = {
+  entry: {
+    'bootstrap': './src/main.ts',
+    'bootstrap.aot': './src/main.aot.ts'
+  },
+
+  output: {
+    path: './bin',
+    filename: '[name].bundle.js'
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.ts$/,
+        loader: 'ts',
+        query: {
+          configFileName: 'tsconfig.json'
+        }
+      }
+    ]
+  },
+
+  resolve: {
+    root: [ path.join(__dirname, 'src') ],
+    extensions: ['', '.ts', '.js']
+  },
+
+  devtool: 'source-map'
+};
 ```
 
 #### lite-server
