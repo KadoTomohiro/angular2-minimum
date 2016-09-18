@@ -525,7 +525,7 @@ $ npm run ngc
 #### 実行
 
 ```bash
-$ npm run start:ngc
+$ npm run start:aot
 ```
 
 aotありの場合、生成されたbundleファイルサイズが半分くらいになっているはず。

@@ -8,7 +8,7 @@
     "lite": "lite-server -c bs-config.json",
     "start": "npm run webpack && npm run lite",
     "ngc": "ngc -p ./tsconfig.aot.json",
-    "start:ngc": "npm run ngc && npm start",
+    "start:aot": "npm run ngc && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "reository": {
