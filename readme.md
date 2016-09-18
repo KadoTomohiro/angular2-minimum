@@ -2,6 +2,15 @@
 
 要件を満たすAngular2の最小構成を探る。他のプロジェクトのテンプレートとなることを目指す。
 
+## とりあえず試す場合
+
+```bash
+$ git clone [this project clone-url]
+$ cd angular2-minimum
+$ npm install
+$ npm run start:aot
+```
+
 ## 要件
 
 ### 必須要件
