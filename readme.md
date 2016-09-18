@@ -21,7 +21,7 @@
   * zone.jsのバグ？のため、動かない可能性が高い。優先度を下げる
   
 
-## 環境構築手順
+## プロジェクトの構築
 
 ### 本ドキュメント作成時の環境
 
@@ -305,3 +305,81 @@ module.exports = {
 }
 ```
 
+## アプリの作成
+
+Hello Worldアプリ
+
+### ディレクトリの作成
+
+```bash
+$ mkdir src src/modules src/components
+```
+
+* src: Angularアプリ資産の格納先
+* src/modules: モジュールクラスを格納
+* src/components: コンポーネントクラスを格納
+
+ディレクトリ構成は悩み中
+
+### エンドポイント
+
+```bash
+$ touch src/index.html src/main.ts
+```
+
+`index.html`
+```hrml
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <base href="/">
+  <title>Angular2 Minimum</title>
+</head>
+<body>
+  <!-- 1. Display the application -->
+  <my-app>Loading...</my-app>
+
+  <!-- 2. Load libraries -->
+  <script src="node_modules/zone.js/dist/zone.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
+
+  <!-- 3. Configure SystemJS -->
+  <script src="bootstrap.bundle.js"></script>
+</body>
+</html>
+```
+
+* `base`要素は必須
+* `script`要素は`my-app`要素より後に記述すること
+* `bootstrap.bundle.js`はwebpackが生成する
+
+`main.ts`
+```typescript
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './modules/app.module';
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+### module
+```bash
+$ touch src/modules/app.module.ts
+```
+
+`app.module.ts`
+```ts
+import { NgModule }       from '@angular/core';
+
+import { AppComponent }   from '../components/app.component';
+
+@NgModule({
+  imports: [
+  ],
+  declarations: [
+    AppComponent,
+  ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule {
+}
+```
