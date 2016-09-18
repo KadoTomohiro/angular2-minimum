@@ -60,20 +60,22 @@ $ npm init -y
 
 ##### インストール
 ```bash
-$ npm install -S angular/{common,compiler,core,forms,http,platform-browser,platform-browser-dynamic,router} rxjs@5.0.0-beta.12 zone.js@0.6.21 core-js
+$ npm install -S angular/{common,compiler,core,forms,http,platform-browser,platform-browser-dynamic,router} rxjs@5.0.0-beta.12 zone.js@0.6.21 reflect-metadata core-js 
 ```
 
 * `@angular/{...}`はAngularを構成するモジュール群。`form`,`http`,`router`は今回は必要ないが、普通のWebAppではよく使うので入れておく。
 * zone.jsとrxjsはangular2のPEER DEPENDENCY
-* core-jsはES2015のpolyfill
+* reflect-metadata?
+* core-jsはES2015のpolyfill。必要か？
 
 #### Typescrip
 
 ##### インストール
 ```bash
-$ npm install -D typescript@beta tslint
+$ npm install -D typescript@beta tslint @types/es6-shim
 $ touch tsconfig.json tslint.json
 ```
+
 
 ##### 設定
 `tsconfig.json`
@@ -261,30 +263,17 @@ module.exports = {
 ##### インストール
 ```bash
 $ npm install -D lite-server
-$ touch bs-config.js
+$ touch bs-config.json
 ```
 
 ##### 設定
 
-`bs-config.js`
-```javascript
-const proxy = require('http-proxy-middleware');
-
-var apiProxy = proxy('/app', {
-    target: 'http://localhost:8001',
-    changeOrigin: true   // for vhosted sites
-});
-
-module.exports = {
+`bs-config.json`
+```json
+{
   "port": 8000,
   "files": ["./**/*.{html,htm,css,js}"],
   "server": {
-    middleware: {
-      0: require('connect-history-api-fallback')({
-        index: '/index.html'
-      }),
-      1: apiProxy
-    },
     "baseDir": [
       "./src/",
       "./bin/"
@@ -369,11 +358,12 @@ $ touch src/modules/app.module.ts
 `app.module.ts`
 ```ts
 import { NgModule }       from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }   from '../components/app.component';
 
 @NgModule({
   imports: [
+    BrowserModule
   ],
   declarations: [
     AppComponent,
@@ -403,4 +393,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title:string = 'Hello World!';
 }
+```
+
+## 実行
+
+```
+npm start
 ```
