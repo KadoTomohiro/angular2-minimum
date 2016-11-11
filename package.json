@@ -4,11 +4,12 @@
   "description": "要件を満たすAngular2の最小構成を探る。他のプロジェクトのテンプレートとなることを目指す。",
   "main": "index.html",
   "scripts": {
-    "webpack": "webpack --config webpack.config.js",
+    "webpack": "webpack --watch --config webpack.config.js",
+    "webpack:aot": "webpack --watch --config webpack.aot.config.js",
     "lite": "lite-server -c bs-config.json",
-    "start": "npm run webpack && npm run lite",
+    "start": "concurrently \"npm run webpack\" \"npm run lite\"",
     "ngc": "ngc -p ./tsconfig.aot.json",
-    "start:aot": "npm run ngc && npm start",
+    "start:prod": "concurrently \"npm run webpack:aot\" \"npm run lite\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "reository": {
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/es6-shim": "0.0.31",
     "@types/node": "^6.0.38",
+    "concurrently": "^3.1.0",
     "lite-server": "^2.2.2",
     "ts-loader": "^0.8.2",
     "tslint": "^3.15.1",
